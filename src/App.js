@@ -7,6 +7,8 @@ import Toppings from './components/Toppings';
 import { useState } from 'react';
 import Context from './Context';
 
+import { Routes, Route } from 'react-router-dom'
+
 const initialToppings = ['cheese', 'pepperoni', 'sausage', 'olives', 'onions', 'green peppers', 'mushrooms']
 const initialPizzas = [
   {
@@ -29,9 +31,13 @@ function App() {
   return (
     <Context.Provider value={value}>
       <Navbar />
-      <Login />
-      <Toppings />
-      <Pizzas />
+
+      <Routes>
+        <Route path='/' element={<Login />}/>
+        <Route path='/toppings' element={<Toppings />}/>
+        <Route path='/pizzas' element ={<Pizzas />}/>
+      </Routes>
+         
     </Context.Provider>
   )
 }
