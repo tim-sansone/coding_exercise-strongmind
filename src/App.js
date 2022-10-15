@@ -1,4 +1,4 @@
-import './App.css';
+import './App.css'
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Pizzas from './components/Pizzas';
