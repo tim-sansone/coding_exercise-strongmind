@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import ToppingList from './ToppingList';
 import PizzaList from './PizzaList';
+import PizzaForm from './PizzaForm';
 
 const initialUpdating = {
     updating: false,
-    pizza: null
+    index: null
 }
 
 function Pizzas(props) {
-    console.log('render Pizzas');
+    
     const {
         toppings,
         pizzas,
@@ -18,35 +19,19 @@ function Pizzas(props) {
     const [form, setForm] = useState({ name: '', toppings: [] });
     const [updating, setUpdating] = useState(initialUpdating);
     
+    console.log(updating);
 
+    // Form functions
 
     const inputChange = event => {
-        const {value} = event.target
+        const { value } = event.target;
         setForm({ ...form, name: value })
     }
 
-    const checkIfValid = pizza => {
-        let pizzaNames = [];
-        let pizzaToppings = [];
-        let currentToppings = pizza.toppings.sort().join('');
-        for(let pizza of pizzas){
-            pizzaNames.push(pizza.name)
-            pizzaToppings.push(pizza.toppings.sort().join(''))
-        }
-        
-        if(pizza.name.trim().length < 3){
-            return { error: true, message: 'Please enter a name of at least 3 characters' }
-        }
-        if(pizza.toppings.length === 0){
-            return { error: true, message: 'Please add at least one topping' }
-        }
-        if(pizzaNames.includes(pizza.name)){
-            return { error: true, message: 'This pizza name already exists' }
-        }
-        if(pizzaToppings.includes(currentToppings)){
-            return { error: true, message: 'This combination of toppings already exists' }
-        }
-        return { error: false, message: '' }
+    const addTopping = topping => {
+        const updateToppings = [...form.toppings];
+        updateToppings.push(topping);
+        setForm({ ...form, toppings: updateToppings })
     }
 
     const removeTopping = (event, index) => {
@@ -56,13 +41,14 @@ function Pizzas(props) {
         setForm({ ...form, toppings: updateToppings })
     }
 
+    // Pizza functions
+
     const addPizza = event => {
         event.preventDefault();
-        const error = checkIfValid({...form});
+        const error = checkIfValid(form);
 
         if(error.error){
-            alert(error.message)
-            return
+            alert(error.message);
         } else {
             setPizzas([...pizzas, form]);
             setForm({ name: '', toppings: [] })
@@ -71,18 +57,30 @@ function Pizzas(props) {
 
     const updatePizza = event => {
         event.preventDefault();
-        const error = checkIfValid({...form});
+        const error = checkIfValid(form);
 
         if(error.error){
-            alert(error.message)
-            return
+            alert(error.message);
         } else {
             const updatePizzas = [...pizzas];
-            updatePizzas[updating.pizza] = form;
+            updatePizzas[updating.index] = form;
             setPizzas(updatePizzas);
             setUpdating(initialUpdating);
             setForm({ name: '', toppings: [] });
         }
+    }
+
+    const deletePizza = index => {
+        const updatePizzas = [...pizzas];
+        updatePizzas.splice(index, 1);
+        setPizzas(updatePizzas);
+    }
+
+    // Manage updating
+
+    const isUpdating = index => {
+        setUpdating({ updating: true, index })
+        setForm({ name: pizzas[index].name, toppings: pizzas[index].toppings })
     }
 
     const cancelUpdate = event => {
@@ -91,41 +89,61 @@ function Pizzas(props) {
         setForm({ name: '', toppings: [] });
     }
 
+    // Validation
+
+    const checkIfValid = formInput => {
+        let pizzaNames = [];
+        let pizzaToppings = [];
+        let inputToppings = formInput.toppings.sort().join('');
+        for(let pizza of pizzas){
+            pizzaNames.push(pizza.name)
+            pizzaToppings.push(pizza.toppings.sort().join(''))
+        }
+        
+        if(updating.updating){
+            pizzaNames.splice(updating.index, 1);
+            pizzaToppings.splice(updating.index, 1);
+        }
+        if(formInput.name.trim().length < 3){
+            return { error: true, message: 'Please enter a name of at least 3 characters' }
+        }
+        if(formInput.toppings.length === 0){
+            return { error: true, message: 'Please add at least one topping' }
+        }
+        if(pizzaNames.includes(formInput.name)){
+            return { error: true, message: 'This pizza name already exists' }
+        }
+        if(pizzaToppings.includes(inputToppings)){
+            return { error: true, message: 'This combination of toppings already exists' }
+        }
+        return { error: false, message: '' }
+    }
+
     return (
-        <div>
-            <ToppingList
-                toppings={toppings}
-                form={form}
-                setForm={setForm}
-            />
+        <div className='pizzas-container'>
             <PizzaList
                 pizzas={pizzas}
-                setPizzas={setPizzas}
-                setForm={setForm}
                 updating={updating}
-                setUpdating={setUpdating}
+                isUpdating={isUpdating}
+                deletePizza={deletePizza}
             />
-            <form>
-                <h2>{updating.updating ? 'Update Pizza' : 'Create New Pizza'}</h2>
-                <label>Pizza Name
-                    <input type='text' name='name' value={form.name} onChange={inputChange}/>
-                </label>
-                {!updating.updating && <button onClick={addPizza}>Create Pizza!</button>}
-                {updating.updating && <button onClick={updatePizza}>Update Pizza</button>}
-                {updating.updating && <button onClick={cancelUpdate}>Cancel Update</button>}
-                <h3>Toppings</h3>
-                {
-                    form.toppings.map((topping, index) => {
-                        return (
-                            <div key={index}>
-                                <p>{topping}</p>
-                                <button onClick={event => removeTopping(event, index)}>Remove Topping</button>
-                            </div>
-                            
-                        )
-                    })
-                }
-            </form>
+            <PizzaForm 
+                form={form}
+                pizzas={pizzas}
+                updating={updating}
+                inputChange={inputChange}
+                removeTopping={removeTopping}
+                addPizza={addPizza}
+                updatePizza={updatePizza}
+                cancelUpdate={cancelUpdate}
+            />  
+            <ToppingList
+                form={form}
+                toppings={toppings}
+                addTopping={addTopping}
+            />
+            
+            
         </div>
     )
 }

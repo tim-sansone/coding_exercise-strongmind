@@ -6,58 +6,49 @@ const initialUpdating = {
     topping: null
 }
 
-function Toppings({ toppings, setToppings }) {
+function Toppings(props) {
+    const {
+        toppings,
+        setToppings
+    } = props
+
     const [form, setForm]  = useState(initialForm);
     const [updating, setUpdating] = useState(initialUpdating)
 
+    // Form functions
+    
     const inputChange = event => {
         const { value } = event.target;
         setForm(value);
     }
 
-    const existing = topping => {
-        return toppings.includes(topping.trim().toLowerCase())
-    }
+    // Toppings functions
 
-    const add = event => {
+    const addTopping = event => {
         event.preventDefault();
-        if(existing(form)){
-            alert('Topping already exists')
-            return
+        const error = checkIfValid(form)
+
+        if(error.error){
+            alert(error.message)
+        } else {
+            setToppings([...toppings, form.trim().toLowerCase()]);
+            setForm(initialForm);
         }
-        if(form.trim().length < 3){
-            alert('Please enter at least 3 characters')
-            return
-        }
-        setToppings([...toppings, form.trim().toLowerCase()]);
-        setForm(initialForm);
     }
 
-    const isUpdating = index => {
-        setUpdating({ updating: true, topping: index });
-        setForm(toppings[index]);
-    }
-
-    const update = event => {
+    const updateTopping = event => {
         event.preventDefault();
-        if(existing(form)){
-            alert('Topping already exists')
-            return
-        }
-        if(form.trim().length < 3){
-            alert('Please enter at least 3 characters')
-            return
-        }
-        const updatedToppings = [...toppings];
-        updatedToppings[updating.topping] = form.trim().toLowerCase();
-        setToppings(updatedToppings);
-        setForm(initialForm);
-        setUpdating(initialUpdating);
-    }
+        const error = checkIfValid(form)
 
-    const cancelUpdate = () => {
-        setForm(initialForm);
-        setUpdating(initialUpdating);
+        if(error.error){
+            alert(error.message)
+        } else {
+            const updatedToppings = [...toppings];
+            updatedToppings[updating.topping] = form.trim().toLowerCase();
+            setToppings(updatedToppings);
+            setForm(initialForm);
+            setUpdating(initialUpdating);
+        }
     }
 
     const deleteTopping = index => {
@@ -66,8 +57,33 @@ function Toppings({ toppings, setToppings }) {
         setToppings(updatedToppings);
     }
 
+    // Manage updating
+
+    const isUpdating = index => {
+        setUpdating({ updating: true, topping: index });
+        setForm(toppings[index]);
+    }
+
+    const cancelUpdate = () => {
+        setForm(initialForm);
+        setUpdating(initialUpdating);
+    }
+
+    // Validation
+
+    const checkIfValid = input => {
+        let formInput = input.trim().toLowerCase()
+        if(toppings.includes(formInput)){
+            return { error: true, message: 'Topping already exists' }
+        }
+        if(formInput.length < 3){
+            return { error: true, message: 'Please enter at least 3 characters' }
+        }
+        return { error: false, message: '' }
+    }
+
     return (
-        <>
+        <div className='toppings'>
             <h2>Toppings</h2>
             <div>
                 {
@@ -83,11 +99,11 @@ function Toppings({ toppings, setToppings }) {
             <form>
                 <h2>{updating.updating ? `Update ${toppings[updating.topping]}` : 'Add Topping'}</h2>
                 <input type='text' value={form} onChange={inputChange}/>
-                {!updating.updating && <button onClick={add}>Add</button>}
-                {updating.updating && <button onClick={update}>Update</button>}
+                {!updating.updating && <button onClick={addTopping}>Add</button>}
+                {updating.updating && <button onClick={updateTopping}>Update</button>}
                 {updating.updating && <button onClick={cancelUpdate}>Cancel Update</button>}
             </form>
-        </>
+        </div>
     )
 }
 

@@ -1,6 +1,6 @@
 import './App.css'
 import Login from './components/Login';
-import Navbar from './components/Navbar';
+import Header from './components/Header';
 import Pizzas from './components/Pizzas';
 import Toppings from './components/Toppings';
 
@@ -10,13 +10,12 @@ import { Routes, Route } from 'react-router-dom'
 const initialToppings = ['cheese', 'pepperoni', 'sausage', 'olives', 'onions', 'green peppers', 'mushrooms']
 const initialPizzas = [
   {
-    name: 'classic',
+    name: 'Classic',
     toppings: ['cheese', 'pepperoni', 'mushrooms', 'onions', 'green peppers']
   }
 ]
 
 function App() {
-  console.log('render App')
   const [toppings, setToppings] = useState(initialToppings);
   const [pizzas, setPizzas] = useState(initialPizzas);
 
@@ -24,7 +23,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Header />
       <Routes>
         <Route path='/' element={<Login />}/>
         <Route path='/toppings' element={<Toppings toppings={toppings} setToppings={setToppings}/>}/>

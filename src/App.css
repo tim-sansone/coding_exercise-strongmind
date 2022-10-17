@@ -8,12 +8,82 @@ h1 {
 
 h2 {
     font-size: 4rem;
+    margin-bottom: 2rem;
 }
 
 h3 {
     font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+h4 {
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 p {
     font-size: 1.8rem;
+}
+
+.header {
+    height: fit-content;
+    background-color: lightblue;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+ .header button {
+    font-size: 3rem;
+    background-color: lightgray;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 2rem;
+ }
+
+.pizzas-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.pizza-list, .pizza-form, .topping-list {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: lightgray;
+    box-shadow: 5px 5px 5px darkgrey;
+    width: 30%;
+}
+
+.pizza-card, .topping-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: lightblue;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.pizza-card h4 {
+    margin-bottom: 1rem;
+}
+
+.pizza-card .buttons, .topping-card .buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pizza-card .buttons button, .topping-card button {
+    font-size: 2rem;
+    background-color: lightgray;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+    margin: 0.5rem;
 }
