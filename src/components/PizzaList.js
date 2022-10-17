@@ -12,7 +12,7 @@ function PizzaList(props) {
             {
                 pizzas.map((pizza, index) => {
                     return (
-                        <div key={index} className='pizza-card'>
+                        <div key={index} className='card'>
                             <div>
                                 <h3>{pizza.name}</h3>
                                 <h4>Toppings:</h4>

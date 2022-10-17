@@ -84,25 +84,36 @@ function Toppings(props) {
 
     return (
         <div className='toppings'>
-            <h2>Toppings</h2>
-            <div>
-                {
-                    toppings.map((topping, index) => (
-                        <div key={index}>
-                            <p>{topping}</p>
-                            {!updating.updating && <button onClick={() => isUpdating(index)}>Update</button>}
-                            {!updating.updating && <button onClick={() => deleteTopping(index)}>Remove</button>}
-                        </div>
-                    ))
-                }
+            <div className='topping-list'>
+                <h2>Toppings</h2>
+                <div>
+                    {
+                        toppings.map((topping, index) => (
+                            <div key={index} className='topping-card'>
+                                <h4>{topping}</h4>
+                                <div className='topping-buttons'>
+                                    <button onClick={() => isUpdating(index)} disabled={updating.updating}>Update</button>
+                                    <button onClick={() => deleteTopping(index)} disabled={updating.updating}>Remove</button>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
-            <form>
-                <h2>{updating.updating ? `Update ${toppings[updating.topping]}` : 'Add Topping'}</h2>
-                <input type='text' value={form} onChange={inputChange}/>
-                {!updating.updating && <button onClick={addTopping}>Add</button>}
-                {updating.updating && <button onClick={updateTopping}>Update</button>}
-                {updating.updating && <button onClick={cancelUpdate}>Cancel Update</button>}
-            </form>
+            <div className='toppings-form'>
+                <form>
+                    <h2>{updating.updating ? `Update ${toppings[updating.topping]}` : 'Add Topping'}</h2>
+                    <div className='form-buttons'>
+                            {!updating.updating && <button onClick={addTopping}>Add</button>}
+                            {updating.updating && <button onClick={updateTopping}>Update</button>}
+                            {updating.updating && <button onClick={cancelUpdate}>Cancel Update</button>}
+                        </div>
+                    <div className='input'>
+                        <h3>Name:</h3>
+                        <input type='text' value={form} onChange={inputChange}/>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

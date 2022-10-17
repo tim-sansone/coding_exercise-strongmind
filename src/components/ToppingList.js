@@ -11,7 +11,7 @@ function ToppingList(props) {
             {
                 toppings.map((topping, index) => {
                     return (
-                        <div key={index} className='topping-card'>
+                        <div key={index} className='card'>
                             <h4>{topping}</h4>
                             <div className='buttons'>
                                 <button onClick={() => addTopping(topping)} disabled={form.toppings.includes(topping)}>Add to Pizza</button>

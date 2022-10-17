@@ -1,3 +1,5 @@
+/*  GENERAL */
+
 html {
     font-size: 62.5%;
 }
@@ -19,11 +21,18 @@ h3 {
 h4 {
     font-size: 2rem;
     font-weight: bold;
+    margin-left: 1rem;
 }
 
 p {
     font-size: 1.8rem;
 }
+
+button:hover {
+    cursor: pointer;
+}
+
+/* HEADER */
 
 .header {
     height: fit-content;
@@ -43,12 +52,16 @@ p {
     margin-top: 2rem;
  }
 
-.pizzas-container {
+/* PIZZA PAGE */
+
+.pizzas-container, .toppings {
     display: flex;
     justify-content: space-evenly;
 }
 
-.pizza-list, .pizza-form, .topping-list {
+/* PIZZA COMPONENTS */
+
+.pizza-list, .pizza-form, .topping-list, .toppings-form {
     border: 2px solid black;
     border-radius: 10px;
     padding: 1rem;
@@ -57,7 +70,7 @@ p {
     width: 30%;
 }
 
-.pizza-card, .topping-card {
+.card {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -68,22 +81,127 @@ p {
     margin: 1rem;
 }
 
-.pizza-card h4 {
-    margin-bottom: 1rem;
+.card p:first-of-type {
+    margin-top: 1rem;
 }
 
-.pizza-card .buttons, .topping-card .buttons {
+.card .buttons {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.pizza-card .buttons button, .topping-card button {
+.card .buttons button {
     font-size: 2rem;
     background-color: lightgray;
     border: 1px solid black;
     border-radius: 10px;
     width: 100%;
     margin: 0.5rem;
+}
+
+.pizza-form .buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.pizza-form-button {
+    font-size: 2rem;
+    background-color: lightblue;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+    margin: 1rem;
+}
+
+.pizza-form .input {
+    display: flex;
+    align-items: center;
+    margin: 2rem 1rem;
+}
+
+.pizza-form .input h3 {
+    margin: 0 2rem 0 0;
+}
+
+.pizza-form .input input {
+    font-size: 3rem;
+}
+
+/* LOGIN PAGE */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: lightgray;
+    box-shadow: 5px 5px 5px darkgrey;
+    width: 30%;
+}
+
+.login button {
+    font-size: 2rem;
+    background-color: lightblue;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 50%;
+    margin: 1rem;
+}
+
+/* TOPPINGS PAGE */
+
+.topping-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: lightblue;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.topping-card .topping-buttons {
+    display: flex;
+}
+
+.topping-card .topping-buttons button {
+    font-size: 2rem;
+    background-color: lightgray;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+    margin: 0.5rem;
+}
+
+.form-buttons button{
+    font-size: 2rem;
+    background-color: lightblue;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 30%;
+    margin: 0.5rem;
+}
+
+.toppings-form .input {
+    display: flex;
+    align-items: center;
+    margin: 2rem 1rem;
+}
+
+.toppings-form .input h3 {
+    margin: 0 2rem 0 0;
+}
+
+.toppings-form .input input {
+    font-size: 3rem;
 }
