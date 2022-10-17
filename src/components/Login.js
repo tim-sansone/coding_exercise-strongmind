@@ -1,6 +1,11 @@
+import { Link } from 'react-router-dom'
+
 function Login() {
     return (
-        <div>This will be the login page</div>
+        <div>
+            <button><Link to='toppings'>Log in as Store Manager</Link></button>
+            <button><Link to='pizzas'>Log in as Chef</Link></button>
+        </div>
     )
 }
 

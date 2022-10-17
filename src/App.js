@@ -5,8 +5,6 @@ import Pizzas from './components/Pizzas';
 import Toppings from './components/Toppings';
 
 import { useState } from 'react';
-import Context from './Context';
-
 import { Routes, Route } from 'react-router-dom'
 
 const initialToppings = ['cheese', 'pepperoni', 'sausage', 'olives', 'onions', 'green peppers', 'mushrooms']
@@ -18,27 +16,23 @@ const initialPizzas = [
 ]
 
 function App() {
+  console.log('render App')
   const [toppings, setToppings] = useState(initialToppings);
   const [pizzas, setPizzas] = useState(initialPizzas);
 
-  const value = {
-    toppings,
-    setToppings,
-    pizzas,
-    setPizzas
-  }
+  
 
   return (
-    <Context.Provider value={value}>
+    <>
       <Navbar />
-
       <Routes>
         <Route path='/' element={<Login />}/>
-        <Route path='/toppings' element={<Toppings />}/>
-        <Route path='/pizzas' element ={<Pizzas />}/>
+        <Route path='/toppings' element={<Toppings toppings={toppings} setToppings={setToppings}/>}/>
+        <Route path='/pizzas' element ={<Pizzas toppings={toppings} pizzas={pizzas} setPizzas={setPizzas}/>}/>
       </Routes>
+    </>
+      
          
-    </Context.Provider>
   )
 }
 

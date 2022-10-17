@@ -5,10 +5,8 @@ function NavBar() {
         
         return (
             <div>
-                <h2>This will be the navbar</h2>
+                <h1>This will be the navbar</h1>
                 <Link to='/'>Login</Link>
-                <Link to='/toppings'>Toppings</Link>
-                <Link to='/pizzas'>Pizzas</Link>
             </div>
         );
 }
