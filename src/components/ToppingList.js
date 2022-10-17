@@ -1,12 +1,18 @@
-function ToppingList({ toppings, currentToppings, setCurrentToppings }) {
+function ToppingList(props) {
+    const {
+        toppings,
+        form,
+        setForm
+    } = props
+    
     const addTopping = topping => {
-        if(currentToppings.includes(topping)){
+        if(form.toppings.includes(topping)){
             alert('You already added that topping')
             return;
         }
-        const updateToppings = currentToppings;
+        const updateToppings = [...form.toppings];
         updateToppings.push(topping);
-        setCurrentToppings(updateToppings)
+        setForm({ ...form, toppings: updateToppings })
     }
 
     return (
