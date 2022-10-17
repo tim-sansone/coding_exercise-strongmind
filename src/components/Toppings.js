@@ -25,6 +25,10 @@ function Toppings({ toppings, setToppings }) {
             alert('Topping already exists')
             return
         }
+        if(form.trim().length < 3){
+            alert('Please enter at least 3 characters')
+            return
+        }
         setToppings([...toppings, form.trim().toLowerCase()]);
         setForm(initialForm);
     }
@@ -38,6 +42,10 @@ function Toppings({ toppings, setToppings }) {
         event.preventDefault();
         if(existing(form)){
             alert('Topping already exists')
+            return
+        }
+        if(form.trim().length < 3){
+            alert('Please enter at least 3 characters')
             return
         }
         const updatedToppings = [...toppings];
@@ -66,8 +74,8 @@ function Toppings({ toppings, setToppings }) {
                     toppings.map((topping, index) => (
                         <div key={index}>
                             <p>{topping}</p>
-                            <button onClick={() => isUpdating(index)}>Update</button>
-                            <button onClick={() => deleteTopping(index)}>Remove</button>
+                            {!updating.updating && <button onClick={() => isUpdating(index)}>Update</button>}
+                            {!updating.updating && <button onClick={() => deleteTopping(index)}>Remove</button>}
                         </div>
                     ))
                 }

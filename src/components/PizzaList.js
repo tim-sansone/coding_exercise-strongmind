@@ -3,6 +3,7 @@ function PizzaList(props) {
         pizzas,
         setPizzas,
         setForm,
+        updating,
         setUpdating
     } = props
     
@@ -30,8 +31,8 @@ function PizzaList(props) {
                                     return <p key={index}>{topping}</p>
                                 })
                             }
-                            <button onClick={() => isUpdating(index)}>Update Pizza</button>
-                            <button onClick={() => deletePizza(index)}>Delete Pizza</button>
+                            {!updating.updating && <button onClick={() => isUpdating(index)}>Update Pizza</button>}
+                            {!updating.updating && <button onClick={() => deletePizza(index)}>Delete Pizza</button>}
                         </div>
                     )
                 })
